@@ -55,12 +55,12 @@ coll = conn[DATABASE][COLLECTION]
 #coll.remove({"first": "duglas"})
 
 # Update single document
-coll.update_one({"nationality": "american"}, {"$set": {"hair_colour": "maroon"}})
+#coll.update_one({"nationality": "american"}, {"$set": {"hair_colour": "maroon"}})
 
 # Update many documents
-coll.update_many({"nationality": "american"}, {"$set": {"hair_colour": "blue"}})
+#coll.update_many({"nationality": "american"}, {"$set": {"hair_colour": "blue"}})
 
-documents = coll.find({"nationality": "american"})
+#documents = coll.find({"nationality": "american"})
 for doc in documents:
     print(doc)
     

@@ -1,3 +1,5 @@
+### Menu Driven Databse CRUD ###
+
 import os
 import pymongo
 if os.path.exists("env.py"):
@@ -77,6 +79,51 @@ def find_record():
             if k != "_id": #ID is the mongo DB id number
                 print(k.capitalize() + ": " + v.capitalize())
 
+# Option 3 - Edit record
+def edit_record():
+    doc = get_record()
+    if doc:
+        update_doc={}
+        print("")
+        for k, v in doc.items():
+            if k != "_id":
+                update_doc[k] = input(k.capitalize() + " [" + v + "] > " )
+
+                if update_doc[k] == "":
+                    update_doc[k] = v # keep original value
+
+        try:
+            coll.update_one(doc, {'$set': update_doc})
+            print("")
+            print("Document Updated")
+        except:
+            print("")
+            print("Error accessing Database")
+
+def delete_record():
+    doc = get_record()
+
+    if doc:
+        print("")
+        for k, v in doc.items():
+            if k != "_id":
+                print(k.capitalize() + ": " + v.capitalize())
+        
+        print("")
+        confirmation = input("Is this the document you want to delete?\nY or N > ")
+        print("")
+        
+        if confirmation.lower() == 'y':
+            try:
+                coll.remove(doc)
+                print("")
+                print("Document deleted!")
+            except:
+                print("")
+                print("Error accessing Database")
+        else:
+            print("Document not deleted")
+
 # Menu loop
 def main_loop():
     while True:
@@ -86,9 +133,9 @@ def main_loop():
         elif option == "2":
             find_record()
         elif option == "3":
-            print("You have selected option 3")
+            edit_record()
         elif option == "4":
-            print("You have selected option 4")
+            delete_record()
         elif option == "5":
             conn.close()
             break
