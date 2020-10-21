@@ -24,11 +24,14 @@ Required
 `pip3 install dnspython`
 `pip3 install pymongo`
 
-On Atlas MongoDB select Clusters>Connect>Connect_Your_Application> copy the srv string (option2)
-Place this as an enviromental variable in Gitpod by :-
+On Atlas MongoDB select Clusters>Connect>Connect_Your_Application> Select Python and Version then copy the "Mongo URI" (srv string). NEVER PUBLISH THIS TO GITHUB
+NEVER PUBLISH TO GITHUB - Usernames, Passwords, SecretKeys, APIs
+
+This information is hidden in an env.py file.
+
 1. Create a file named env.py in the root directory of your project. This is the file you will use to define your environment variables.
 2. If you don't have one already, create a file named .gitignore  in the root directory of your project.
-3. Next we need to stop git from pushing this file to github, and so keep your environment variables secret. To do this, open your .gitignore  file add the following text to it: env.py 
+3. Next we need to stop git from pushing this file to github, and so keep your environment variables secret. To do this, open your .gitignore  file add the following text to it: env.py and __pychache__/ 
 4. At the top of your env.py  file, you need to import os so that you can set the environment variables in the operating system. Once you have added the line “import os” underneath you can assign your environment variables using the following syntax: 
 os.environ["Variable Name Here"] = "Value of Variable Goes Here" 
 Example: os.environ["SECRET_KEY"] = "ohsosecret"
