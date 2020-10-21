@@ -1,43 +1,43 @@
-<img src="https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png" style="margin: 0;">
+# Intro To MongoDB
 
-Welcome USER_NAME,
+## Commands
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. You can safely delete this README.md file, or change it for your own project.
+### Read / Insert / Find
+`show collections` - Show all collections in current DB
+`coll = db.myFirstMDB;` - Assign DB to variable
+`coll.insert({first: 'john', last: 'lennon', dob: '09/10/1940'});` Insert Data
+`coll.find()` - Find all documents in collection
+`coll.find({gender: 'f'})` - Find
+`coll.find({gender: 'f', nationality: 'english'})` - Find AND
+`coll.find({gender:"f", $or: [{nationality:"american"}, {nationality:"irish"}]});` - Find OR
+`coll.find({gender: 'f', $or: [{nationality: 'american'}, {nationality: 'irish'}]}).sort({nationality: 1});` Find OR with sort (number in sort is sort mode)
 
-## Gitpod Reminders
+### Update / Delete
+`coll.update({nationality: 'irish'}, {$set: {hair_colour: 'blue'}})` - Updates the first positive document with new Data
+`coll.update({nationality: 'irish'}, {$set: {hair_colour: 'purple'}},{multi:true})` - Updates all positive documents with new Data
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+`coll.remove({first: 'kate', last: 'bush'})` - Delete records
 
-`python3 -m http.server`
+## Linking to Pyhton
 
-A blue button should appear to click: *Make Public*,
+Required
+`pip3 install dnspython`
+`pip3 install pymongo`
 
-Another blue button should appear to click: *Open Browser*.
+On Atlas MongoDB select Clusters>Connect>Connect_Your_Application> copy the srv string (option2)
+Place this as an enviromental variable in Gitpod by :-
+1. Create a file named env.py in the root directory of your project. This is the file you will use to define your environment variables.
+2. If you don't have one already, create a file named .gitignore  in the root directory of your project.
+3. Next we need to stop git from pushing this file to github, and so keep your environment variables secret. To do this, open your .gitignore  file add the following text to it: env.py 
+4. At the top of your env.py  file, you need to import os so that you can set the environment variables in the operating system. Once you have added the line “import os” underneath you can assign your environment variables using the following syntax: 
+os.environ["Variable Name Here"] = "Value of Variable Goes Here" 
+Example: os.environ["SECRET_KEY"] = "ohsosecret"
+5. Then the following code imports this new env.py file where you need to use your environment variables. For example your app.py file for flask project or settings.py file for Django project. Add this under your other imports at the top of the file. 
+from os import path
+if path.exists("env.py"):
+  import env 
+The if statement here is so that the env.py file is only pulled when working on your code in your workspace, not when it is deployed on heroku. For deployment you can set your environment variables in the heroku dashboard in settings > config vars.
+6. Now that your environment variables have been set in your env.py file, and the file has been imported into your project, you can use them as needed using the following syntax: 
+SECRET_KEY = os.environ.get('SECRET_KEY') 
+Make sure you save all your files before testing if it works.
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
-
-A blue button should appear to click: *Make Public*,
-
-Another blue button should appear to click: *Open Browser*.
-
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the backend lessons.
-
-## Updates Since The Instructional Video
-
-We continually tweak and adjust this template to help give you the best experience. Here are the updates since the original video was made:
-
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
-
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
-
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
-
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
-
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
-
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
-
---------
-
-Happy coding!
