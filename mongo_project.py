@@ -27,13 +27,64 @@ def show_menu():
     option = input("Enter an option - ")
     return option
 
+# Returns a record
+def get_record():
+    print("")
+    first = input("Enter first name > ")
+    last = input("Enter first last > ")
+
+    try:
+        doc = coll.find_one({'first': first.lower(), 'last': last.lower()})
+    except:
+        print("")
+        print("Error accessing Database")
+
+    if not doc:
+        print("")
+        print("Error : No results found")
+    
+    return doc
+
+# Option 1 - Add record to database
+def add_record():
+    print("")
+    first = input("Enter first name > ")
+    last = input("Enter first last > ")
+    dob = input("Enter date of birth (DD/MM/YYYY) > ")
+    gender = input("Enter gender > ")
+    hair_colour = input("Enter hair colour > ")
+    occupation = input("Enter occupation > ")
+    nationality = input("Enter nationality > ")
+
+    new_doc = {'first': first.lower(), 'last': last.lower(), 'dob': dob, 'gender': gender.lower(), 
+                'hair_colour': hair_colour.lower(), 'occupation': occupation.lower(),
+                'nationality': nationality.lower()}
+    
+    try:
+        coll.insert(new_doc)
+        print("")
+        print("Record Inserted")
+    except:
+        print("")
+        print("Error accessing database")
+
+# Option 2 - Find Record
+def find_record():
+    doc = get_record()
+    if doc:
+        print("")
+        for k, v in doc.items():
+            if k != "_id": #ID is the mongo DB id number
+                print(k.capitalize() + ": " + v.capitalize())
+
+# Menu loop
 def main_loop():
     while True:
         option = show_menu()
         if option == "1":
-            print("You have selected option 1")
+            add_record()
         elif option == "2":
-            print("You have selected option 2")
+            find_record()
         elif option == "3":
             print("You have selected option 3")
         elif option == "4":
@@ -44,9 +95,8 @@ def main_loop():
         else:
             print("Invalid option")
 
-# Run connect to mongo function
-conn = mongo_connect(MONGO_URI)
-# Add collection to a variable
-coll = conn[DATABASE][COLLECTION]
+
+conn = mongo_connect(MONGO_URI) # Run connect to mongo function
+coll = conn[DATABASE][COLLECTION] # Add collection to a variable
 
 main_loop()
